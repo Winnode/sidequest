@@ -2,9 +2,7 @@ require('dotenv').config();
 const axios = require('axios');
 
 // Load multiple tokens from environment variables
-const TOKENS = Object.keys(process.env)
-  .filter(key => key.startsWith('TOKEN_'))
-  .map(key => process.env[key]);
+const BEARER_TOKENS = process.env.TOKENS.split('\n');
 
 async function getTasks(userId, bearerToken) {
   try {
@@ -55,9 +53,8 @@ async function clearTask(userId, taskId, bearerToken) {
 
 (async () => {
   try {
-    for (let i = 0; i < TOKENS.length; i++) {
-      const token = TOKENS[i];
-      if (!token) continue; // Skip empty or undefined tokens
+    for (const token of BEARER_TOKENS) {
+      if (token.trim() === '') continue; // Skip empty lines
 
       const USER_ID = token.split('-')[0]; // Extract user ID from token
 
@@ -68,7 +65,7 @@ async function clearTask(userId, taskId, bearerToken) {
       }
 
       console.log(
-        `All tasks have been cleared for user ${USER_ID}, using token ${i + 1}, congrats! Follow: https://twitter.com/WinNode`
+        `All tasks have been cleared for user ${USER_ID}, congrats! Follow: https://twitter.com/WinNode`
       );
     }
   } catch (error) {
