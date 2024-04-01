@@ -1,4 +1,4 @@
-# Side Quests Bot
+# Side Quests
 
 This bot automates the process of clearing tasks in the Side Quests game. It fetches the tasks assigned to the user and clears them automatically.
 
