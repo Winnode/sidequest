@@ -25,7 +25,7 @@ async function getTasks(userId, bearerToken) {
 
     return uniqueTaskIds;
   } catch (error) {
-    console.log('Error in Get Tasks: ' + error.response.data.message);
+    console.log(`Error in Get Tasks for user ${userId}: ` + error.response.data.message);
     return [];
   }
 }
@@ -58,6 +58,8 @@ async function clearTask(userId, taskId, bearerToken) {
 
       const USER_ID = token.split('-')[0]; // Extract user ID from token
 
+      console.log(`Clearing tasks for user ${USER_ID}...`);
+
       const tasksToClear = await getTasks(USER_ID, token);
 
       for (const taskId of tasksToClear) {
@@ -67,6 +69,9 @@ async function clearTask(userId, taskId, bearerToken) {
       console.log(
         `All tasks have been cleared for user ${USER_ID}, congrats! Follow: https://twitter.com/WinNode`
       );
+
+      // Add a delay (in milliseconds) between each user's task clearing process
+      await new Promise(resolve => setTimeout(resolve, 5000));
     }
   } catch (error) {
     console.log(
