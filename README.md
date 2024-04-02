@@ -54,14 +54,9 @@ To obtain the Bearer token required for authentication, follow these steps:
 
 6. Copy the value after the word "Bearer" in the Authorization header.
 
-7. Paste this value as your Bearer token in the `.env` file multiple Tokens.
+7. Paste this value as your Bearer token in the `.env` file multiple Tokens (",") tokens sparator.
 	
-	TOKENS=12345678-abcdefg
-
-	TOKENS=87654321-hgfedcba
-
-	TOKENS=11111111-aaaaaaaa
-
+	TOKENS=12345678-abcdefg,87654321-hgfedcba,11111111-aaaaaaaa
 ## Give
 - [Follow kami di Twitter](https://twitter.com/Winnode)
 - [Follow kami di GitHub](https://github.com/Winnode)
