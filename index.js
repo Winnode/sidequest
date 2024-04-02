@@ -2,7 +2,7 @@ require('dotenv').config();
 const axios = require('axios');
 
 // Load multiple tokens from environment variables
-const BEARER_TOKENS = process.env.TOKENS.split('\n');
+const BEARER_TOKENS = process.env.TOKENS.split(',');
 
 async function getTasks(userId, bearerToken) {
   try {
@@ -25,7 +25,7 @@ async function getTasks(userId, bearerToken) {
 
     return uniqueTaskIds;
   } catch (error) {
-    console.log(`Error in Get Tasks for user ${userId}: ` + error.response.data.message);
+    console.log(`Error in Get Tasks for user ${userId}: ${error.response.data.message}`);
     return [];
   }
 }
@@ -46,7 +46,7 @@ async function clearTask(userId, taskId, bearerToken) {
     );
   } catch (error) {
     console.log(
-      `Error in Clear Task with ID ${taskId} for user ${userId}: ` + error.response.data.message
+      `Error in Clear Task with ID ${taskId} for user ${userId}: ${error.response.data.message}`
     );
   }
 }
@@ -54,11 +54,7 @@ async function clearTask(userId, taskId, bearerToken) {
 (async () => {
   try {
     for (const token of BEARER_TOKENS) {
-      if (token.trim() === '') continue; // Skip empty lines
-
       const USER_ID = token.split('-')[0]; // Extract user ID from token
-
-      console.log(`Clearing tasks for user ${USER_ID}...`);
 
       const tasksToClear = await getTasks(USER_ID, token);
 
@@ -67,11 +63,8 @@ async function clearTask(userId, taskId, bearerToken) {
       }
 
       console.log(
-        `All tasks have been cleared for user ${USER_ID}, congrats! Follow: https://twitter.com/WinNode`
+        `------------------------\nAll tasks have been cleared for user ${USER_ID}, congrats! Follow: https://twitter.com/WinNode\n------------------------`
       );
-
-      // Add a delay (in milliseconds) between each user's task clearing process
-      await new Promise(resolve => setTimeout(resolve, 5000));
     }
   } catch (error) {
     console.log(
